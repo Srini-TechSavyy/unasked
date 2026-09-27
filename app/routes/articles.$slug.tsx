@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 import type { Route } from "./+types/articles.$slug";
 import { ArticleCard } from "~/components/ArticleCard";
+import { ArticleShare } from "~/components/ArticleShare";
+import { CategoryLabel } from "~/components/CategoryLabel";
 import { MarkdownContent } from "~/components/MarkdownContent";
 import {
   getPublishedBySlug,
@@ -24,7 +26,8 @@ export async function loader({ params, request }: Route.LoaderArgs) {
   const related = await getRelatedPublished(article, 3);
   const siteUrl = getSiteUrl(request);
   const html = renderMarkdown(article.content);
-  return { article, related, siteUrl, html };
+  const shareUrl = canonicalUrl(`/articles/${article.slug}`, siteUrl);
+  return { article, related, siteUrl, html, shareUrl };
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
@@ -46,7 +49,7 @@ export function meta({ loaderData }: Route.MetaArgs) {
 }
 
 export default function ArticlePage({ loaderData }: Route.ComponentProps) {
-  const { article, related, siteUrl, html } = loaderData;
+  const { article, related, siteUrl, html, shareUrl } = loaderData;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,59 +67,70 @@ export default function ArticlePage({ loaderData }: Route.ComponentProps) {
   };
 
   return (
-    <article className="site-shell pb-16 md:pb-24">
+    <article className="pb-16 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <header className="max-w-2xl mx-auto pt-10 md:pt-14 text-center">
+      <header className="site-shell-narrow pt-10 md:pt-14 text-left md:text-center">
         {article.topic ? (
-          <p className="text-xs uppercase tracking-[0.25em] text-stone-500">
-            {article.topic}
-          </p>
+          <div className="md:flex md:justify-center">
+            <CategoryLabel>{article.topic}</CategoryLabel>
+          </div>
         ) : null}
-        <h1 className="mt-4 font-display text-4xl md:text-5xl leading-tight text-stone-900">
+        <h1 className="mt-5 font-display text-4xl md:text-5xl lg:text-[3.25rem] leading-[1.12] text-ink tracking-tight">
           {article.title}
         </h1>
         {article.subtitle ? (
-          <p className="mt-4 text-lg md:text-xl text-stone-600 leading-relaxed">
+          <p className="mt-5 text-lg md:text-xl text-ink-muted leading-relaxed">
             {article.subtitle}
           </p>
         ) : null}
-        <p className="mt-6 text-sm text-stone-500">
+        <p className="mt-6 text-sm text-ink-muted">
           {article.published_at ? (
             <time dateTime={article.published_at}>
               {formatPublishedDate(article.published_at)}
             </time>
           ) : null}
-          <span className="mx-2 text-stone-300" aria-hidden>·</span>
+          <span className="mx-2 text-border" aria-hidden>·</span>
           {formatReadingTime(article.content)}
         </p>
+        <div className="mt-6 md:hidden flex justify-start">
+          <ArticleShare url={shareUrl} title={article.title} layout="inline" />
+        </div>
       </header>
 
       {article.cover_image ? (
-        <figure className="max-w-3xl mx-auto mt-10 md:mt-12">
-          <img
-            src={article.cover_image}
-            alt=""
-            className="w-full max-h-[28rem] object-cover"
-            loading="lazy"
-          />
+        <figure className="site-shell mt-10 md:mt-12 max-w-5xl">
+          <div className="article-card-image">
+            <img
+              src={article.cover_image}
+              alt=""
+              className="w-full max-h-[32rem] object-cover"
+              loading="eager"
+            />
+          </div>
         </figure>
       ) : null}
 
-      <div className="max-w-2xl mx-auto mt-10 md:mt-14">
+      <div className="site-shell-narrow mt-12 md:mt-14 relative">
+        <aside
+          className="hidden lg:block absolute -left-[4.5rem] top-2"
+          aria-label="Share"
+        >
+          <ArticleShare url={shareUrl} title={article.title} layout="rail" />
+        </aside>
         <MarkdownContent html={html} />
       </div>
 
       {article.medium_url ? (
-        <p className="max-w-2xl mx-auto mt-12 text-sm text-stone-500">
+        <p className="site-shell-narrow mt-12 text-sm text-ink-muted">
           <a
             href={article.medium_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-offset-4 hover:underline"
+            className="text-accent underline-offset-4 hover:underline"
           >
             Originally published on Medium →
           </a>
@@ -124,11 +138,9 @@ export default function ArticlePage({ loaderData }: Route.ComponentProps) {
       ) : null}
 
       {related.length > 0 ? (
-        <section className="max-w-3xl mx-auto mt-20 md:mt-28 border-t border-stone-200/80 pt-12">
-          <h2 className="text-sm uppercase tracking-[0.25em] text-stone-500">
-            More from Unasked
-          </h2>
-          <div className="mt-10 flex flex-col gap-12">
+        <section className="site-shell max-w-3xl mt-20 md:mt-28 editorial-rule pt-12">
+          <h2 className="editorial-label">More from Unasked</h2>
+          <div className="mt-10 flex flex-col">
             {related.map((item) => (
               <ArticleCard key={item.id} article={item} />
             ))}
@@ -136,8 +148,8 @@ export default function ArticlePage({ loaderData }: Route.ComponentProps) {
         </section>
       ) : null}
 
-      <p className="max-w-2xl mx-auto mt-16 text-sm text-stone-500">
-        <Link to="/articles" className="underline-offset-4 hover:underline">
+      <p className="site-shell-narrow mt-16 text-sm text-ink-muted">
+        <Link to="/articles" className="text-accent underline-offset-4 hover:underline">
           ← All articles
         </Link>
       </p>

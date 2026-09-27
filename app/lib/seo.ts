@@ -1,5 +1,5 @@
 export const SITE_NAME = "Unasked";
-export const SITE_TAGLINE = "Questions we don't usually ask.";
+export const SITE_TAGLINE = "Questions worth asking.";
 export const SITE_DESCRIPTION =
   "Essays about life, technology, money, travel, and the questions hiding beneath the obvious.";
 

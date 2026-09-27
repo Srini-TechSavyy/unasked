@@ -4,7 +4,12 @@
   --font-display: "Newsreader", "Iowan Old Style", "Palatino Linotype", serif;
   --font-sans: "DM Sans", system-ui, sans-serif;
   --font-serif: "Source Serif 4", "Georgia", serif;
-  --color-accent: #4a5d52;
+  --color-canvas: #f7f5f0;
+  --color-canvas-muted: #efece5;
+  --color-ink: #171717;
+  --color-ink-muted: #5f5b55;
+  --color-border: #dcd8d0;
+  --color-accent: #a52a2a;
 }
 
 @layer base {
@@ -15,56 +20,80 @@
   }
 
   body {
-    @apply bg-[#faf9f7] text-stone-900;
+    @apply bg-canvas text-ink;
   }
 }
 
 .site-shell {
-  @apply mx-auto w-full max-w-5xl px-5 md:px-8;
+  @apply mx-auto w-full max-w-6xl px-5 md:px-10;
+}
+
+.site-shell-narrow {
+  @apply mx-auto w-full max-w-[740px] px-5 md:px-8;
 }
 
 .brand-link {
-  @apply font-display text-sm md:text-base tracking-[0.35em] text-stone-900 no-underline;
+  @apply font-display text-xl md:text-2xl tracking-[0.12em] text-ink no-underline transition-opacity hover:opacity-80;
+}
+
+.brand-dot {
+  color: var(--color-accent);
 }
 
 .nav-link {
-  @apply text-stone-600 no-underline transition-colors hover:text-stone-900;
+  @apply text-sm text-ink-muted no-underline transition-colors hover:text-ink;
 }
 
 .nav-link-active {
-  @apply text-stone-900;
+  @apply text-ink;
+}
+
+.editorial-label {
+  @apply text-[0.7rem] font-medium uppercase tracking-[0.22em] text-accent;
+}
+
+.editorial-link {
+  @apply inline-flex items-center gap-1 text-sm font-medium text-accent no-underline transition-[gap] hover:gap-2;
+}
+
+.editorial-rule {
+  @apply border-0 border-t border-border;
 }
 
 .article-title-link {
-  @apply text-inherit no-underline transition-opacity hover:opacity-70;
+  @apply text-inherit no-underline transition-opacity hover:opacity-75;
 }
 
-.topic-pill {
-  @apply rounded-full border border-stone-200 bg-white/60 px-3 py-1.5 text-xs uppercase tracking-wider text-stone-600 no-underline transition-colors hover:border-stone-300 hover:text-stone-900;
+.topic-link {
+  @apply text-xs uppercase tracking-[0.18em] text-ink-muted no-underline transition-colors hover:text-ink;
 }
 
-.topic-pill-active {
-  @apply border-stone-800 bg-stone-900 text-[#faf9f7];
+.topic-link-active {
+  @apply text-accent;
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-sm bg-stone-900 px-5 py-2.5 text-sm font-medium text-[#faf9f7] no-underline transition-colors hover:bg-stone-800;
+  @apply inline-flex items-center justify-center bg-accent px-5 py-2.5 text-sm font-medium text-[#faf9f7] no-underline transition-colors hover:bg-[#8f2424];
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center border border-accent bg-transparent px-4 py-2 text-sm font-medium text-accent no-underline transition-colors hover:bg-accent hover:text-[#faf9f7];
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center rounded-sm border border-stone-300 bg-white px-5 py-2.5 text-sm font-medium text-stone-800 transition-colors hover:border-stone-400;
+  @apply inline-flex items-center justify-center border border-border bg-canvas px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink-muted;
 }
 
 .field-label {
-  @apply block text-sm font-medium text-stone-800;
+  @apply block text-sm font-medium text-ink;
 }
 
 .field-hint {
-  @apply mt-1 text-xs text-stone-500;
+  @apply mt-1 text-xs text-ink-muted;
 }
 
 .field-input {
-  @apply mt-2 w-full rounded-sm border border-stone-200 bg-white px-3 py-2.5 text-sm text-stone-900 shadow-none outline-none ring-0 transition-colors focus:border-stone-400;
+  @apply mt-2 w-full border border-border bg-white px-3 py-2.5 text-sm text-ink shadow-none outline-none ring-0 transition-colors focus:border-ink-muted;
 }
 
 .editor-field {
@@ -72,31 +101,31 @@
 }
 
 .editor-toolbar {
-  @apply flex flex-wrap gap-1 rounded-sm border border-stone-200 bg-white p-2;
+  @apply flex flex-wrap gap-1 border border-border bg-white p-2;
 }
 
 .editor-tool {
-  @apply rounded-sm px-2 py-1 text-xs uppercase tracking-wide text-stone-600 hover:bg-stone-100 hover:text-stone-900;
+  @apply px-2 py-1 text-xs uppercase tracking-wide text-ink-muted hover:bg-canvas-muted hover:text-ink;
 }
 
 .editor-textarea {
-  @apply w-full min-h-[28rem] rounded-sm border border-stone-200 bg-white px-3 py-3 font-mono text-sm leading-relaxed text-stone-900 outline-none focus:border-stone-400;
+  @apply w-full min-h-[28rem] border border-border bg-white px-3 py-3 font-mono text-sm leading-relaxed text-ink outline-none focus:border-ink-muted;
 }
 
 .admin-table th {
-  @apply border-b border-stone-200 pb-3 pr-4 font-medium text-stone-500;
+  @apply border-b border-border pb-3 pr-4 font-medium text-ink-muted;
 }
 
 .admin-table td {
-  @apply border-b border-stone-100 py-4 pr-4 align-top text-stone-700;
+  @apply border-b border-border/60 py-4 pr-4 align-top text-ink-muted;
 }
 
 .admin-action {
-  @apply text-stone-800 underline-offset-4 hover:underline bg-transparent border-0 p-0 cursor-pointer text-sm;
+  @apply text-ink underline-offset-4 hover:underline bg-transparent border-0 p-0 cursor-pointer text-sm;
 }
 
 .status-pill {
-  @apply inline-block rounded-full px-2 py-0.5 text-xs uppercase tracking-wide;
+  @apply inline-block px-2 py-0.5 text-xs uppercase tracking-wide;
 }
 
 .status-published {
@@ -104,19 +133,19 @@
 }
 
 .status-draft {
-  @apply bg-stone-100 text-stone-700;
+  @apply bg-canvas-muted text-ink-muted;
 }
 
 .prose-article {
   font-family: var(--font-serif);
-  @apply text-lg md:text-[1.15rem] leading-[1.75] text-stone-800;
+  @apply text-lg md:text-[1.125rem] leading-[1.85] text-ink;
 }
 
 .prose-article h1,
 .prose-article h2,
 .prose-article h3 {
   font-family: var(--font-display);
-  @apply text-stone-900 font-normal tracking-tight;
+  @apply text-ink font-normal tracking-tight;
 }
 
 .prose-article h1 {
@@ -124,15 +153,15 @@
 }
 
 .prose-article h2 {
-  @apply text-2xl md:text-3xl mt-10 mb-3;
+  @apply text-2xl md:text-[1.75rem] mt-12 mb-4 pt-2 border-t border-border;
 }
 
 .prose-article h3 {
-  @apply text-xl md:text-2xl mt-8 mb-2;
+  @apply text-xl md:text-2xl mt-8 mb-3;
 }
 
 .prose-article p {
-  @apply my-5;
+  @apply my-6;
 }
 
 .prose-article a {
@@ -140,12 +169,12 @@
 }
 
 .prose-article blockquote {
-  @apply my-8 border-l-2 border-stone-300 pl-5 text-stone-600 italic;
+  @apply my-10 border-l-2 border-accent/40 pl-5 text-ink-muted italic;
 }
 
 .prose-article ul,
 .prose-article ol {
-  @apply my-5 pl-6;
+  @apply my-6 pl-6;
 }
 
 .prose-article li {
@@ -153,11 +182,11 @@
 }
 
 .prose-article pre {
-  @apply my-6 overflow-x-auto rounded-sm bg-stone-900 px-4 py-3 text-sm text-stone-100;
+  @apply my-8 overflow-x-auto bg-ink px-4 py-3 text-sm text-[#f7f5f0];
 }
 
 .prose-article code {
-  @apply rounded-sm bg-stone-100 px-1 py-0.5 text-[0.92em] text-stone-800;
+  @apply bg-canvas-muted px-1 py-0.5 text-[0.92em] text-ink;
 }
 
 .prose-article pre code {
@@ -165,7 +194,11 @@
 }
 
 .prose-article img {
-  @apply my-8 w-full;
+  @apply my-10 w-full;
+}
+
+.prose-article hr {
+  @apply my-12 border-0 border-t border-border;
 }
 
 .font-display {
@@ -174,4 +207,36 @@
 
 .text-accent {
   color: var(--color-accent);
+}
+
+.bg-canvas {
+  background-color: var(--color-canvas);
+}
+
+.bg-canvas-muted {
+  background-color: var(--color-canvas-muted);
+}
+
+.text-ink {
+  color: var(--color-ink);
+}
+
+.text-ink-muted {
+  color: var(--color-ink-muted);
+}
+
+.border-border {
+  border-color: var(--color-border);
+}
+
+.article-card-image {
+  @apply overflow-hidden border border-border bg-canvas-muted;
+}
+
+.article-card-image img {
+  @apply h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03];
+}
+
+.share-btn {
+  @apply flex h-9 w-9 items-center justify-center border border-border text-ink-muted no-underline transition-colors hover:border-ink-muted hover:text-ink;
 }

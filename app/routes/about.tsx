@@ -15,11 +15,11 @@ export function meta() {
 
 export default function About() {
   return (
-    <div className="site-shell pb-16 md:pb-24 max-w-2xl">
-      <header className="pt-10 md:pt-14">
-        <h1 className="font-display text-4xl md:text-5xl text-stone-900">About</h1>
+    <div className="site-shell-narrow pb-16 md:pb-24">
+      <header className="pt-10 md:pt-14 border-b border-border pb-8">
+        <h1 className="font-display text-4xl md:text-5xl text-ink">About</h1>
       </header>
-      <div className="mt-10 space-y-6 text-lg md:text-xl text-stone-700 leading-relaxed">
+      <div className="mt-10 space-y-6 text-lg md:text-xl text-ink-muted leading-[1.75] font-serif">
         <p>
           I&apos;m Srini. I write about life, money, technology, travel, and the
           questions we often don&apos;t stop to ask.

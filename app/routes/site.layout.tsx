@@ -12,7 +12,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function SiteLayout() {
   const { isAuthor } = useLoaderData<typeof loader>();
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf9f7] text-stone-900">
+    <div className="min-h-screen flex flex-col bg-canvas text-ink">
       <SiteHeader isAuthor={isAuthor} />
       <main className="flex-1">
         <Outlet />

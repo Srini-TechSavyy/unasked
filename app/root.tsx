@@ -63,10 +63,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main className="site-shell py-20 max-w-2xl">
-      <h1 className="font-display text-4xl text-stone-900">{message}</h1>
-      <p className="mt-4 text-stone-600">{details}</p>
+      <h1 className="font-display text-4xl text-ink">{message}</h1>
+      <p className="mt-4 text-ink-muted">{details}</p>
       {stack && (
-        <pre className="mt-6 overflow-x-auto text-xs text-stone-500">
+        <pre className="mt-6 overflow-x-auto text-xs text-ink-muted">
           <code>{stack}</code>
         </pre>
       )}

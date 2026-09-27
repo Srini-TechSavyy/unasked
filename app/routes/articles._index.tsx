@@ -34,17 +34,17 @@ export default function ArticlesIndex({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="site-shell pb-16 md:pb-24 max-w-3xl">
-      <header className="pt-10 md:pt-14">
-        <h1 className="font-display text-4xl md:text-5xl text-stone-900">Articles</h1>
-        <p className="mt-4 text-stone-600 text-lg">
+      <header className="pt-10 md:pt-14 border-b border-border pb-8">
+        <h1 className="font-display text-4xl md:text-5xl text-ink">Articles</h1>
+        <p className="mt-4 text-ink-muted text-lg leading-relaxed">
           Published essays, filtered by what you want to explore.
         </p>
       </header>
 
-      <div className="mt-10 flex flex-wrap gap-2">
+      <nav className="mt-8 flex flex-wrap gap-x-6 gap-y-3" aria-label="Topics">
         <Link
           to="/articles"
-          className={`topic-pill ${!topic ? "topic-pill-active" : ""}`}
+          className={`topic-link ${!topic ? "topic-link-active" : ""}`}
         >
           All
         </Link>
@@ -52,16 +52,16 @@ export default function ArticlesIndex({ loaderData }: Route.ComponentProps) {
           <Link
             key={t}
             to={`/articles?topic=${encodeURIComponent(t)}`}
-            className={`topic-pill ${topic === t ? "topic-pill-active" : ""}`}
+            className={`topic-link ${topic === t ? "topic-link-active" : ""}`}
           >
             {t}
           </Link>
         ))}
-      </div>
+      </nav>
 
-      <div className="mt-12 flex flex-col gap-12 md:gap-16">
+      <div className="mt-12 flex flex-col">
         {articles.length === 0 ? (
-          <p className="text-stone-500">
+          <p className="text-ink-muted">
             No published articles{topic ? ` in ${topic}` : ""} yet.
           </p>
         ) : (
@@ -71,8 +71,8 @@ export default function ArticlesIndex({ loaderData }: Route.ComponentProps) {
         )}
       </div>
 
-      <p className="mt-16 text-sm text-stone-500">
-        <Link to="/" className="underline-offset-4 hover:underline">
+      <p className="mt-16 text-sm text-ink-muted">
+        <Link to="/" className="text-accent underline-offset-4 hover:underline">
           ← Back home
         </Link>
       </p>
