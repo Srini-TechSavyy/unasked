@@ -1,0 +1,26 @@
+/**
+ * Unasked — Cloudflare Workers + D1
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "unasked",
+	"compatibility_date": "2026-09-25",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": "./workers/app.ts",
+	"vars": {
+		"SITE_URL": "https://unasked.techsavyy.com"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "unasked-db",
+			"database_id": "c6b87b8f-ed18-4537-9b3e-ee1c6100fa05",
+			"migrations_dir": "migrations"
+		}
+	],
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true
+}
